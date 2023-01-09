@@ -14,7 +14,7 @@ const nextBtn = document.getElementById('next');
 const songs = [
   {
     name: 'hailey',
-    displayName: 'Sky Full of Star - Cold Play',
+    displayName: 'Sky Full of Stars - Cold Play',
     artist: 'Hailey',
   },
   {
