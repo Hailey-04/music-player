@@ -23,14 +23,14 @@ const songs = [
     artist: 'Rouchelle',
   },
   {
-    name: 'chad',
-    displayName: 'Silly Love Songs',
-    artist: 'Chad',
-  },
-  {
     name: 'shirvorne',
     displayName: 'Last Last - Burna Boy',
     artist: 'Shirvorne',
+  },
+    {
+    name: 'chad',
+    displayName: 'Silly Love Songs',
+    artist: 'Chad',
   },
 ];
 
