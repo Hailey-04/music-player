@@ -4,6 +4,8 @@ const artist = document.getElementById('artist');
 const music = document.querySelector('audio');
 const progressContainer = document.getElementById('progress-container');
 const progress = document.getElementById('progress');
+const currentTimeEl = document.getElementById('current-time');
+const durationEl = document.getElementById('duration');
 const prevBtn = document.getElementById('prev');
 const playBtn = document.getElementById('play');
 const nextBtn = document.getElementById('next');
@@ -11,24 +13,24 @@ const nextBtn = document.getElementById('next');
 // Music
 const songs = [
   {
-    name: 'jacinto-1',
-    displayName: 'Electric Chill Machine',
-    artist: 'Jacinto Design',
+    name: 'hailey',
+    displayName: 'Sky Full of Star - Cold Play',
+    artist: 'Hailey',
   },
   {
-    name: 'jacinto-2',
-    displayName: 'Seven Nation Army(Remix)',
-    artist: 'Jacinto Design',
+    name: 'rouchelle',
+    displayName: 'Rush - Ayra Starr',
+    artist: 'Rouchelle',
   },
   {
-    name: 'jacinto-3',
-    displayName: 'Goodnight, Disco Queen',
-    artist: 'Jacinto Design',
+    name: 'chad',
+    displayName: 'Silly Love Songs',
+    artist: 'Chad',
   },
   {
-    name: 'metric-1',
-    displayName: 'Front Row(Remix)',
-    artist: 'Metric/Jacinto Design',
+    name: 'shirvorne',
+    displayName: 'Last Last - Burna Boy',
+    artist: 'Shirvorne',
   },
 ];
 
@@ -93,11 +95,41 @@ loadSong(songs[songIndex]);
 // Update Progress Bar and Time
 function updateProgressBar(e) {
   if (isPlaying) {
-    console.log(e);
+    const {duration, currentTime} = e.srcElement;
+    // Update Progress Bar Width
+    const progressPercent = (currentTime/duration) * 100;
+    progress.style.width = `${progressPercent}%`;
+    // Calculate display for duration
+    const durationMinutes = Math.floor(duration/ 60);
+    let durationSeconds = Math.floor(duration % 60);
+    if (durationSeconds < 10) {
+      durationSeconds = `0${durationSeconds}`;
+    }
+  // Delay switching duration Element to avoid NaN
+    if (durationSeconds) {
+      durationEl.textContent = `${durationMinutes} : ${durationSeconds}`;
   }
+    // Calculate display for Current Time
+    const currentMinutes = Math.floor(currentTime / 60);
+    let currentSeconds = Math.floor(currentTime % 60);
+    if (currentSeconds < 10) {
+      currentSeconds = `0${currentSeconds}`;
+    }
+    currentTimeEl.textContent = `${currentMinutes} : ${currentSeconds}`;
+}
+}
+
+// Set Progress Bar
+function setProgressBar(e) {
+  const width = this.clientWidth;
+  const clickX = e.offsetX;
+  const {duration} = music;
+  music.currentTime = (clickX / width) * duration;
 }
 
 // Event Listeners
 prevBtn.addEventListener('click', prevSong);
 nextBtn.addEventListener('click', nextSong);
+music.addEventListener('ended', nextSong);
 music.addEventListener('timeupdate', updateProgressBar);
+progressContainer.addEventListener('click', setProgressBar);
